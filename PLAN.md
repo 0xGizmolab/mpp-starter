@@ -135,7 +135,7 @@ mpp-examples/
 
 ### Phase 2: Server Frameworks - Official Middleware
 - [x] 1. Next.js 16.2 — mppx/nextjs
-- [ ] 2. Hono 4.12.8 — mppx/hono
+- [x] 2. Hono 4.12.8 — mppx/hono
 - [ ] 3. Elysia 1.4.28 — mppx/elysia
 - [ ] 4. Express 5.2.1 — mppx/express
 
