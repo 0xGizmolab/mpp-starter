@@ -129,32 +129,32 @@ mpp-examples/
 ## Build Order
 
 ### Phase 1: Setup
-- [ ] Initialize pnpm workspace
-- [ ] Set up vitest workspace config
-- [ ] Create root package.json with scripts
+- [x] Initialize pnpm workspace
+- [x] Set up vitest workspace config
+- [x] Create root package.json with scripts
 
 ### Phase 2: Server Frameworks - Official Middleware
 - [x] 1. Next.js 16.2 — mppx/nextjs
 - [x] 2. Hono 4.12.8 — mppx/hono
 - [x] 3. Elysia 1.4.28 — mppx/elysia
-- [ ] 4. Express 5.2.1 — mppx/express
+- [x] 4. Express 5.2.1 — mppx/express
 
 ### Phase 3: Server Frameworks - Manual Integration
-- [ ] 5. Fastify 5.8.2 — mppx/server + Fastify adapter
-- [ ] 6. Koa 3.1.2 — mppx/server + Node listener
-- [ ] 7. NestJS 11.1.17 — mppx/server + interceptor
+- [x] 5. Fastify 5.8.2 — mppx/server + Fastify adapter
+- [x] 6. Koa 3.1.2 — mppx/server + Node listener
+- [x] 7. NestJS 11.1.17 — mppx/server + interceptor
 
 ### Phase 4: Serverless / Edge
-- [ ] 8. Cloudflare Workers — Hono + mppx
-- [ ] 9. Vercel Edge — Edge runtime + mppx
-- [ ] 10. AWS Lambda — Serverless + mppx
-- [ ] 11. Deno Deploy — Hono + mppx
+- [x] 8. Cloudflare Workers — Hono + mppx
+- [x] 9. Vercel Edge — Edge runtime + mppx
+- [x] 10. AWS Lambda — Serverless + mppx
+- [x] 11. Deno Deploy — Hono + mppx
 
 ### Phase 5: Testing & Polish
-- [ ] Run all tests (`pnpm test`)
-- [ ] Fix any failures
-- [ ] Write root README with overview
-- [ ] Final commit
+- [x] Run all tests (`pnpm test`) — 49 tests passing
+- [x] Fix any failures
+- [x] Write root README with overview
+- [x] Final commit
 
 ## API Spec (all apps)
 

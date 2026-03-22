@@ -1,0 +1,20 @@
+{
+  "name": "@mpp-examples/aws-lambda",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "mppx": "latest"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.0.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.1.1"
+  }
+}

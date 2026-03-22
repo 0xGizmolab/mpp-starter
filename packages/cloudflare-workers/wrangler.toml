@@ -1,0 +1,8 @@
+name = "mpp-cloudflare-example"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[vars]
+MPP_RECIPIENT = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+MPP_CURRENCY = "0x20c0000000000000000000000000000000000000"
+MPP_AMOUNT = "0.01"

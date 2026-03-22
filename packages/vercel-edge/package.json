@@ -1,0 +1,21 @@
+{
+  "name": "@mpp-examples/vercel-edge",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "mppx": "latest"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.0",
+    "typescript": "^5.7.3",
+    "vercel": "^40.0.0",
+    "vitest": "^3.1.1"
+  }
+}
