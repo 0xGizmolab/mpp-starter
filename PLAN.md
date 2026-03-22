@@ -134,7 +134,7 @@ mpp-examples/
 - [ ] Create root package.json with scripts
 
 ### Phase 2: Server Frameworks - Official Middleware
-- [ ] 1. Next.js 16.2 — mppx/nextjs
+- [x] 1. Next.js 16.2 — mppx/nextjs
 - [ ] 2. Hono 4.12.8 — mppx/hono
 - [ ] 3. Elysia 1.4.28 — mppx/elysia
 - [ ] 4. Express 5.2.1 — mppx/express

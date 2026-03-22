@@ -1,0 +1,30 @@
+{
+  "name": "mpp-examples",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Example apps demonstrating MPP (Machine Payments Protocol) integration across 11 JS frameworks and runtimes",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "pnpm -r build",
+    "dev:nextjs": "pnpm --filter @mpp-examples/nextjs dev",
+    "dev:hono": "pnpm --filter @mpp-examples/hono dev",
+    "dev:elysia": "pnpm --filter @mpp-examples/elysia dev",
+    "dev:express": "pnpm --filter @mpp-examples/express dev",
+    "dev:fastify": "pnpm --filter @mpp-examples/fastify dev",
+    "dev:koa": "pnpm --filter @mpp-examples/koa dev",
+    "dev:nestjs": "pnpm --filter @mpp-examples/nestjs dev",
+    "dev:cloudflare": "pnpm --filter @mpp-examples/cloudflare-workers dev",
+    "dev:vercel-edge": "pnpm --filter @mpp-examples/vercel-edge dev",
+    "dev:aws-lambda": "pnpm --filter @mpp-examples/aws-lambda dev",
+    "dev:deno": "pnpm --filter @mpp-examples/deno-deploy dev"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vitest": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
