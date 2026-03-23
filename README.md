@@ -203,7 +203,6 @@ app.get('/paid', (req, res, next) => {
 ## Learn More
 
 - [MPP Documentation](https://mpp.dev/docs)
-- [mppx SDK](https://github.com/mppx/mppx)
 - [MPP Protocol Spec](https://mpp.dev/spec)
 
 ## License
