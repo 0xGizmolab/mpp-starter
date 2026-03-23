@@ -387,7 +387,7 @@ mpp-starter/
 
 Want to integrate MPP into your API or product? We can help.
 
-**[→ Contact GizmoLab](https://gizmolab.io/contact)**
+**[→ Contact GizmoLab](https://gizmolab.io/contact?utm_source=github&utm_medium=readme&utm_campaign=mpp-starter)**
 
 We'll get you set up with payment-gated endpoints, sessions, and everything you need to monetize your API for AI agents.
 
