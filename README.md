@@ -383,6 +383,16 @@ mpp-starter/
 
 ---
 
+## 🚀 Need Help Enabling Agentic Payments?
+
+Want to integrate MPP into your API or product? We can help.
+
+**[→ Contact GizmoLab](https://gizmolab.io/contact)**
+
+We'll get you set up with payment-gated endpoints, sessions, and everything you need to monetize your API for AI agents.
+
+---
+
 ## 📄 License
 
 MIT © [GizmoLab](https://github.com/0xGizmolab)
