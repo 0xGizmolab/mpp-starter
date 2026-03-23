@@ -33,7 +33,7 @@ MPP (Machine Payments Protocol) enables **payment-gated APIs** — endpoints tha
 
 ```bash
 # Clone and install
-git clone https://github.com/your-org/mpp-examples.git
+git clone https://github.com/0xGizmolab/mpp-starter.git
 cd mpp-examples
 pnpm install
 
