@@ -368,7 +368,6 @@ mpp-starter/
 | Tempo Blockchain | [tempo.xyz](https://tempo.xyz) |
 | Tempo Web Wallet | [wallet.tempo.xyz](https://wallet.tempo.xyz/welcome) |
 | Tempo CLI | [tempo.xyz/install](https://tempo.xyz/install) |
-| mppx npm package | [npmjs.com/package/mppx](https://www.npmjs.com/package/mppx) |
 | Services Directory | [mpp.dev/services](https://mpp.dev/services) |
 | LLM Context | [mpp.dev/llms-full.txt](https://mpp.dev/llms-full.txt) |
 
