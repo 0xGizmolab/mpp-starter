@@ -1,210 +1,350 @@
-# MPP Examples Monorepo
+# MPP Examples — Machine Payments Protocol Starter Kit
 
-Example apps demonstrating **Machine Payments Protocol (MPP)** integration across 11 JavaScript frameworks and runtimes.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![MPP](https://img.shields.io/badge/MPP-HTTP%20402-green.svg)](https://mpp.dev)
+[![Tempo](https://img.shields.io/badge/Tempo-Stablecoins-purple.svg)](https://tempo.xyz)
+[![Stripe](https://img.shields.io/badge/Stripe-Cards-blue.svg)](https://stripe.com)
 
-## What is MPP?
+Production-ready examples for integrating **payment-gated APIs** using the Machine Payments Protocol (MPP) across **11 JavaScript frameworks**.
 
-MPP (Machine Payments Protocol) enables **payment-gated APIs** — endpoints that require micropayments before returning content. When a request lacks valid payment credentials, the server responds with HTTP 402 (Payment Required) and a `WWW-Authenticate: MPP ...` header instructing the client how to pay.
+> **MPP** is the open standard for machine-to-machine payments via HTTP 402 — co-developed by [Tempo Labs](https://tempo.xyz) and [Stripe](https://stripe.com).
 
-## Frameworks Included
+## 🌐 What is MPP?
+
+The **Machine Payments Protocol** enables APIs to charge for access in the same HTTP request — no API keys, no subscriptions, no billing accounts. When a client requests a protected resource:
+
+1. **Server returns `402 Payment Required`** with payment options
+2. **Client pays** (stablecoins, cards, or Bitcoin)
+3. **Client retries** with payment proof
+4. **Server delivers** the resource with a receipt
+
+```
+Client ──GET /resource──▶ Server
+       ◀──402 + Challenge──
+       ──pays via Tempo/Stripe──
+       ──GET + Credential──▶
+       ◀──200 + Receipt──
+```
+
+### Why MPP?
+
+| Problem | MPP Solution |
+|---------|--------------|
+| API keys leak and get abused | Pay per request — no keys needed |
+| Subscriptions waste money on unused quota | Pay only for what you use |
+| Billing disputes and chargebacks | Cryptographic receipts prove delivery |
+| Agent onboarding friction | Zero signup — just pay and go |
+
+---
+
+## ⚡ Who Built This?
+
+MPP was co-developed by:
+
+- **[Tempo Labs](https://tempo.xyz)** — Built the Tempo blockchain for stablecoin payments at scale. Incubated by Paradigm and Stripe.
+- **[Stripe](https://stripe.com)** — Card payments integration via Shared Payment Tokens.
+- **[Wevm](https://wevm.dev)** — Maintains the official `mppx` SDK.
+
+The protocol is submitted to the **IETF** for standardization: [paymentauth.org](https://paymentauth.org)
+
+---
+
+## 💳 Payment Methods
+
+MPP supports multiple payment rails:
+
+| Method | Description | Use Case |
+|--------|-------------|----------|
+| **[Tempo](https://mpp.dev/payment-methods/tempo)** | Stablecoin payments (USDC, pathUSD) on Tempo blockchain | High-frequency API calls, AI agents |
+| **[Stripe](https://mpp.dev/payment-methods/stripe)** | Cards, Apple Pay, Google Pay via Shared Payment Tokens | Traditional payments, web apps |
+| **[Lightning](https://mpp.dev/payment-methods/lightning)** | Bitcoin over Lightning Network (BOLT11) | Crypto-native apps |
+| **Custom** | Build your own payment method | Any payment rail |
+
+### Payment Intents
+
+| Intent | Description | Latency | Cost |
+|--------|-------------|---------|------|
+| **Charge** | One-time payment per request | ~600ms (on-chain) | Per-tx fees |
+| **Session** | Pay-as-you-go via payment channels | ~10ms (off-chain) | Near-zero |
+
+**Sessions** enable streaming payments for LLM APIs — pay per token with microsecond verification.
+
+---
+
+## 🔗 The Tempo Blockchain
+
+[Tempo](https://tempo.xyz) is a purpose-built blockchain for stablecoin payments:
+
+- **~0.6s finality** — Deterministic settlement, no re-orgs
+- **Stablecoin-native gas** — Pay fees in USD, not volatile tokens
+- **Payment lanes** — Guaranteed blockspace for payments
+- **Payment channels** — Off-chain sessions for high-throughput billing
+- **Smart accounts** — Passkey auth, batch transactions, gas sponsorship
+
+### Supported Currencies
+
+| Token | Address | Description |
+|-------|---------|-------------|
+| pathUSD | `0x20c0...0000` | Tempo's native USD stablecoin |
+| USDC | Bridge address | Circle's USDC (bridged) |
+
+---
+
+## 🛠 Framework Examples
 
 ### Server Frameworks (7)
 
-| Framework | Version | Port | MPP Integration |
-|-----------|---------|------|-----------------|
-| [Next.js](./packages/nextjs) | 16.2 | 3000 | `mppx/nextjs` |
-| [Hono](./packages/hono) | 4.12.8 | 3001 | `mppx/hono` |
-| [Elysia](./packages/elysia) | 1.4.28 | 3002 | `mppx/elysia` |
-| [Express](./packages/express) | 5.2.1 | 3003 | `mppx/express` |
-| [Fastify](./packages/fastify) | 5.8.2 | 3004 | Manual middleware |
-| [Koa](./packages/koa) | 3.1.2 | 3005 | Manual middleware |
-| [NestJS](./packages/nestjs) | 11.1.17 | 3006 | Guard |
+| Framework | Version | Port | Integration | Middleware |
+|-----------|---------|------|-------------|------------|
+| [Next.js](./packages/nextjs) | 16.2 | 3000 | Official | `mppx/nextjs` |
+| [Hono](./packages/hono) | 4.12.8 | 3001 | Official | `mppx/hono` |
+| [Elysia](./packages/elysia) | 1.4.28 | 3002 | Official | `mppx/elysia` |
+| [Express](./packages/express) | 5.2.1 | 3003 | Official | `mppx/express` |
+| [Fastify](./packages/fastify) | 5.8.2 | 3004 | Manual | Custom preHandler |
+| [Koa](./packages/koa) | 3.1.2 | 3005 | Manual | Custom middleware |
+| [NestJS](./packages/nestjs) | 11.1.17 | 3006 | Manual | Guard |
 
 ### Serverless / Edge (4)
 
-| Platform | Description |
-|----------|-------------|
-| [Cloudflare Workers](./packages/cloudflare-workers) | Edge compute |
-| [Vercel Edge](./packages/vercel-edge) | Edge functions |
-| [AWS Lambda](./packages/aws-lambda) | Classic serverless |
-| [Deno Deploy](./packages/deno-deploy) | Deno runtime |
+| Platform | Description | Deployment |
+|----------|-------------|------------|
+| [Cloudflare Workers](./packages/cloudflare-workers) | Edge compute | `wrangler deploy` |
+| [Vercel Edge](./packages/vercel-edge) | Edge functions | `vercel --prod` |
+| [AWS Lambda](./packages/aws-lambda) | Classic serverless | SAM/CDK |
+| [Deno Deploy](./packages/deno-deploy) | Deno runtime | `deployctl` |
 
-## Quick Start
+---
+
+## 🚀 Quick Start
 
 ```bash
-# Clone and install
+# Clone the repo
 git clone https://github.com/0xGizmolab/mpp-starter.git
-cd mpp-examples
+cd mpp-starter
+
+# Install dependencies
 pnpm install
 
-# Run tests for all packages
-pnpm test
-
-# Run a specific example
-pnpm dev:nextjs   # or dev:hono, dev:elysia, etc.
-```
-
-## API Endpoints
-
-Every example exposes the same three endpoints:
-
-| Endpoint | Auth | Description |
-|----------|------|-------------|
-| `GET /health` | None | Returns `{ status: "ok", framework: "...", version: "..." }` |
-| `GET /free` | None | Returns `{ message: "This is free!", timestamp: ... }` |
-| `GET /paid` | MPP | Returns `{ message: "Premium content unlocked!", timestamp: ... }` |
-
-### Testing Payment-Gated Endpoints
-
-```bash
-# Without credentials — returns 402
-curl http://localhost:3000/api/paid
-# HTTP/1.1 402 Payment Required
-# WWW-Authenticate: MPP realm="api", method="tempo", params="..."
-
-# With mppx CLI — handles payment automatically
-npx mppx http://localhost:3000/api/paid
-# { "message": "Premium content unlocked!", "timestamp": 1711152000000 }
-```
-
-## Configuration
-
-Each app has its own configuration:
-
-```
-packages/
-  nextjs/
-    src/mpp-config.ts   # Local config loader
-    .env.example        # Environment template
-  hono/
-    src/mpp-config.ts
-    .env.example
-  ...
-```
-
-### Default Environment Variables
-
-```env
-# .env.example
-MPP_RECIPIENT=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-MPP_CURRENCY=0x20c0000000000000000000000000000000000000
-MPP_AMOUNT=0.01
-MPP_WAIT_FOR_CONFIRMATION=true
-```
-
-| Variable | Description |
-|----------|-------------|
-| `MPP_RECIPIENT` | Wallet address to receive payments |
-| `MPP_CURRENCY` | Token contract address (default: pathUSD) |
-| `MPP_AMOUNT` | Charge amount per request |
-| `MPP_WAIT_FOR_CONFIRMATION` | Wait for on-chain confirmation |
-
-## Project Structure
-
-```
-mpp-examples/
-├── package.json              # Workspace config
-├── pnpm-workspace.yaml       # pnpm workspace definition
-├── vitest.workspace.ts       # Test runner config
-├── PLAN.md                   # Build plan & progress
-│
-└── packages/
-    ├── nextjs/               # Next.js 16.2 example
-    ├── hono/                 # Hono 4.12.8 example
-    ├── elysia/               # Elysia 1.4.28 example
-    ├── express/              # Express 5.2.1 example
-    ├── fastify/              # Fastify 5.8.2 example
-    ├── koa/                  # Koa 3.1.2 example
-    ├── nestjs/               # NestJS 11.1.17 example
-    ├── cloudflare-workers/   # Cloudflare Workers example
-    ├── vercel-edge/          # Vercel Edge Functions example
-    ├── aws-lambda/           # AWS Lambda example
-    └── deno-deploy/          # Deno Deploy example
-```
-
-## Running Tests
-
-```bash
 # Run all tests
 pnpm test
 
-# Run tests in watch mode
-pnpm test:watch
-
-# Run tests for specific package
-cd packages/nextjs && pnpm test
+# Start a specific example
+pnpm dev:nextjs   # or dev:hono, dev:elysia, etc.
 ```
 
-## How MPP Works
+### Test Payment Flow
 
-### Without Payment (402 Response)
+```bash
+# Without payment — returns 402
+curl http://localhost:3000/api/paid
+# → 402 Payment Required + WWW-Authenticate header
 
-```http
-GET /api/paid HTTP/1.1
-Host: localhost:3000
-
-HTTP/1.1 402 Payment Required
-WWW-Authenticate: MPP realm="api", method="tempo", params="recipient=0x...,currency=0x...,amount=0.01"
-Content-Type: application/json
-
-{"error": "Payment required"}
+# With mppx CLI — handles payment automatically
+npx mppx http://localhost:3000/api/paid
+# → { "message": "Premium content unlocked!" }
 ```
 
-### With Valid Payment
+---
 
-```http
-GET /api/paid HTTP/1.1
-Host: localhost:3000
-Authorization: MPP <payment-proof>
+## 📡 API Endpoints
 
-HTTP/1.1 200 OK
-Content-Type: application/json
+Every example exposes the same three endpoints:
 
-{"message": "Premium content unlocked!", "timestamp": 1711152000000}
-```
+| Endpoint | Auth | Response |
+|----------|------|----------|
+| `GET /health` | None | `{ status: "ok", framework: "...", version: "..." }` |
+| `GET /free` | None | `{ message: "This is free!", timestamp: ... }` |
+| `GET /paid` | MPP | `{ message: "Premium content unlocked!", timestamp: ... }` |
 
-## Official mppx Middleware
+---
 
-For frameworks with official support, integration is simple:
+## 🔧 Configuration
+
+Each package has its own `mpp-config.ts` and `.env.example`:
 
 ```typescript
-// Next.js example
+// packages/*/src/mpp-config.ts
+export const mppConfig = {
+  recipient: process.env.MPP_RECIPIENT || '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+  currency: process.env.MPP_CURRENCY || '0x20c0000000000000000000000000000000000000',
+  amount: process.env.MPP_AMOUNT || '0.01',
+  waitForConfirmation: process.env.MPP_WAIT_FOR_CONFIRMATION !== 'false',
+}
+```
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `MPP_RECIPIENT` | Your wallet address | Test wallet |
+| `MPP_CURRENCY` | Token contract (pathUSD) | Tempo pathUSD |
+| `MPP_AMOUNT` | Charge per request | 0.01 |
+| `MPP_WAIT_FOR_CONFIRMATION` | Wait for on-chain finality | true |
+
+---
+
+## 📦 Integration Examples
+
+### Official Middleware (Next.js, Hono, Elysia, Express)
+
+```typescript
 import { Mppx, tempo } from 'mppx/nextjs'
 
 const mppx = Mppx.create({
-  methods: [tempo({ recipient: '0x...', currency: '0x...', decimals: 6 })],
+  methods: [
+    tempo({
+      recipient: '0xYourWallet...',
+      currency: '0x20c0000000000000000000000000000000000000',
+      decimals: 6,
+    }),
+  ],
 })
 
+// Protect any route with a single wrapper
 export const GET = mppx.charge({ amount: '0.01' })(() =>
-  Response.json({ message: 'Premium content unlocked!' })
+  Response.json({ message: 'Premium content!' })
 )
 ```
 
-## Manual Integration
-
-For frameworks without official middleware, implement the auth check manually:
+### Manual Integration (Fastify, Koa, NestJS)
 
 ```typescript
-// Express example
-app.get('/paid', (req, res, next) => {
-  const auth = req.headers.authorization
-  if (!auth?.startsWith('MPP ')) {
-    res.status(402)
-       .set('WWW-Authenticate', 'MPP realm="api", method="tempo", params="..."')
-       .send()
-    return
-  }
-  next()
-}, (req, res) => {
-  res.json({ message: 'Premium content unlocked!' })
+// Fastify preHandler example
+app.get('/paid', {
+  preHandler: async (request, reply) => {
+    const auth = request.headers.authorization
+    if (!auth?.startsWith('MPP ')) {
+      reply.code(402).header(
+        'WWW-Authenticate',
+        `MPP realm="api", method="tempo", params="recipient=${config.recipient},..."`
+      ).send({ error: 'Payment required' })
+    }
+  },
+}, async () => ({ message: 'Premium content!' }))
+```
+
+### Stripe Integration
+
+```typescript
+import Stripe from 'stripe'
+import { Mppx, stripe } from 'mppx/server'
+
+const mppx = Mppx.create({
+  methods: [
+    stripe.charge({
+      client: new Stripe(process.env.STRIPE_SECRET_KEY!),
+      paymentMethodTypes: ['card'],
+    }),
+  ],
 })
 ```
 
-## Learn More
+### Session-Based Billing (Pay-as-you-go)
 
-- [MPP Documentation](https://mpp.dev/docs)
-- [MPP Protocol Spec](https://mpp.dev/spec)
+```typescript
+import { Mppx, tempo } from 'mppx/server'
 
-## License
+const mppx = Mppx.create({
+  methods: [
+    tempo.session({
+      recipient: '0xYourWallet...',
+      currency: '0x20c0...',
+    }),
+  ],
+})
 
-MIT
+// Client opens a payment channel, signs vouchers per request
+// Server verifies in microseconds — no on-chain calls
+```
+
+---
+
+## 🌍 MPP Services Ecosystem
+
+30+ services already accept MPP payments:
+
+| Service | Category | Description |
+|---------|----------|-------------|
+| [OpenAI](https://openai.mpp.tempo.xyz) | AI | GPT-4, embeddings, DALL-E |
+| [Anthropic](https://anthropic.mpp.tempo.xyz) | AI | Claude Sonnet, Opus, Haiku |
+| [Google Gemini](https://gemini.mpp.tempo.xyz) | AI | Gemini, Veo video, image gen |
+| [fal.ai](https://fal.mpp.tempo.xyz) | Media | 600+ image/video models |
+| [Firecrawl](https://firecrawl.mpp.tempo.xyz) | Web | Web scraping for LLMs |
+| [Exa](https://exa.mpp.tempo.xyz) | Search | AI-powered web search |
+| [Browserbase](https://mpp.browserbase.com) | Web | Headless browser sessions |
+| [Alchemy](https://mpp.alchemy.com) | Blockchain | 100+ chain data APIs |
+| [Dune](https://api.dune.com) | Blockchain | SQL queries on-chain data |
+| [Allium](https://agents.allium.so) | Blockchain | Real-time blockchain data |
+
+**Full list:** [mpp.dev/services](https://mpp.dev/services)
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run all 49 tests across 11 packages
+pnpm test
+
+# Watch mode
+pnpm test:watch
+
+# Single package
+cd packages/nextjs && pnpm test
+```
+
+---
+
+## 📂 Project Structure
+
+```
+mpp-starter/
+├── packages/
+│   ├── nextjs/          # Next.js 16.2 (App Router)
+│   ├── hono/            # Hono 4.12.8
+│   ├── elysia/          # Elysia 1.4.28 (Bun)
+│   ├── express/         # Express 5.2.1
+│   ├── fastify/         # Fastify 5.8.2
+│   ├── koa/             # Koa 3.1.2
+│   ├── nestjs/          # NestJS 11.1.17
+│   ├── cloudflare-workers/
+│   ├── vercel-edge/
+│   ├── aws-lambda/
+│   └── deno-deploy/
+├── package.json
+├── pnpm-workspace.yaml
+└── vitest.workspace.ts
+```
+
+---
+
+## 📚 Learn More
+
+| Resource | Link |
+|----------|------|
+| MPP Documentation | [mpp.dev/docs](https://mpp.dev/docs) |
+| Protocol Specification | [paymentauth.org](https://paymentauth.org) |
+| Tempo Blockchain | [tempo.xyz](https://tempo.xyz) |
+| mppx SDK | [npm: mppx](https://www.npmjs.com/package/mppx) |
+| Services Directory | [mpp.dev/services](https://mpp.dev/services) |
+| LLM Context | [mpp.dev/llms-full.txt](https://mpp.dev/llms-full.txt) |
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo
+2. Create a feature branch
+3. Make your changes
+4. Run tests: `pnpm test`
+5. Submit a PR
+
+---
+
+## 📄 License
+
+MIT © [GizmoLab](https://github.com/0xGizmolab)
+
+---
+
+## 🏷 Keywords
+
+`mpp` `machine-payments-protocol` `http-402` `payment-gated-api` `tempo` `stripe` `stablecoin` `usdc` `api-monetization` `micropayments` `pay-per-request` `ai-agents` `llm-payments` `web3` `blockchain` `nextjs` `hono` `express` `fastify` `elysia` `nestjs` `serverless` `edge-functions`
