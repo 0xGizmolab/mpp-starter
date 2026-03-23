@@ -104,6 +104,12 @@ MPP supports multiple payment rails:
 | [Koa](./packages/koa) | 3.1.2 | 3005 | Manual | Custom middleware |
 | [NestJS](./packages/nestjs) | 11.1.17 | 3006 | Manual | Guard |
 
+### Session Example (Pay-as-you-go)
+
+| Framework | Version | Port | Description |
+|-----------|---------|------|-------------|
+| [Hono Session](./packages/hono-session) | 4.12.8 | 3008 | Payment channels for high-throughput billing |
+
 ### Serverless / Edge (4)
 
 | Platform | Description | Deployment |
@@ -116,6 +122,24 @@ MPP supports multiple payment rails:
 ---
 
 ## 🚀 Quick Start
+
+### 1. Install Tempo Wallet (for paying)
+
+```bash
+# Install the Tempo CLI
+curl -L https://tempo.xyz/install | bash
+
+# Create a wallet (opens browser for passkey auth)
+tempo wallet login
+
+# Fund your wallet with testnet tokens
+tempo wallet fund
+
+# Check your balance
+tempo wallet balance
+```
+
+### 2. Clone & Run Examples
 
 ```bash
 # Clone the repo
@@ -132,16 +156,27 @@ pnpm test
 pnpm dev:nextjs   # or dev:hono, dev:elysia, etc.
 ```
 
-### Test Payment Flow
+### 3. Test Payment Flow
 
 ```bash
 # Without payment — returns 402
 curl http://localhost:3000/api/paid
 # → 402 Payment Required + WWW-Authenticate header
 
-# With mppx CLI — handles payment automatically
-npx mppx http://localhost:3000/api/paid
+# With Tempo CLI — handles payment automatically
+tempo request http://localhost:3000/api/paid
 # → { "message": "Premium content unlocked!" }
+
+# Preview cost without paying
+tempo request --dry-run http://localhost:3000/api/paid
+```
+
+### Alternative: Use npx (no install)
+
+```bash
+# Create account and make paid request
+npx mppx account create
+npx mppx http://localhost:3000/api/paid
 ```
 
 ---
@@ -299,7 +334,8 @@ cd packages/nextjs && pnpm test
 mpp-starter/
 ├── packages/
 │   ├── nextjs/          # Next.js 16.2 (App Router)
-│   ├── hono/            # Hono 4.12.8
+│   ├── hono/            # Hono 4.12.8 (charge)
+│   ├── hono-session/    # Hono 4.12.8 (sessions)
 │   ├── elysia/          # Elysia 1.4.28 (Bun)
 │   ├── express/         # Express 5.2.1
 │   ├── fastify/         # Fastify 5.8.2
@@ -323,7 +359,8 @@ mpp-starter/
 | MPP Documentation | [mpp.dev/docs](https://mpp.dev/docs) |
 | Protocol Specification | [paymentauth.org](https://paymentauth.org) |
 | Tempo Blockchain | [tempo.xyz](https://tempo.xyz) |
-| mppx SDK | [npm: mppx](https://www.npmjs.com/package/mppx) |
+| Tempo Wallet CLI | [tempo.xyz/install](https://tempo.xyz/install) |
+| mppx npm package | [npmjs.com/package/mppx](https://www.npmjs.com/package/mppx) |
 | Services Directory | [mpp.dev/services](https://mpp.dev/services) |
 | LLM Context | [mpp.dev/llms-full.txt](https://mpp.dev/llms-full.txt) |
 
