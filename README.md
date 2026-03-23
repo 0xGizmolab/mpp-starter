@@ -123,8 +123,15 @@ MPP supports multiple payment rails:
 
 ## 🚀 Quick Start
 
-### 1. Install Tempo Wallet (for paying)
+### 1. Get a Tempo Wallet (for paying)
 
+**Option A: No-code (Browser)**
+1. Go to [wallet.tempo.xyz](https://wallet.tempo.xyz/welcome)
+2. Create wallet with passkey (Face ID / fingerprint)
+3. Fund with testnet tokens
+4. Done — use the web wallet to pay for APIs
+
+**Option B: CLI (for developers/agents)**
 ```bash
 # Install the Tempo CLI
 curl -L https://tempo.xyz/install | bash
@@ -359,7 +366,8 @@ mpp-starter/
 | MPP Documentation | [mpp.dev/docs](https://mpp.dev/docs) |
 | Protocol Specification | [paymentauth.org](https://paymentauth.org) |
 | Tempo Blockchain | [tempo.xyz](https://tempo.xyz) |
-| Tempo Wallet CLI | [tempo.xyz/install](https://tempo.xyz/install) |
+| Tempo Web Wallet | [wallet.tempo.xyz](https://wallet.tempo.xyz/welcome) |
+| Tempo CLI | [tempo.xyz/install](https://tempo.xyz/install) |
 | mppx npm package | [npmjs.com/package/mppx](https://www.npmjs.com/package/mppx) |
 | Services Directory | [mpp.dev/services](https://mpp.dev/services) |
 | LLM Context | [mpp.dev/llms-full.txt](https://mpp.dev/llms-full.txt) |
